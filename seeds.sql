@@ -35,3 +35,24 @@ VALUES ("Elixir Nanoweb Medium", "Strings", 17.99, 100);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Martin Lifetime SP Medium", "Strings", 7.99, 37);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Martin Lifetime SP Light", "Strings", 7.99, 67);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Martin Lifetime SP Heavy", "Strings", 7.99, 31);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Earnie Ball Slinky - Light Tops, Heavy Bottoms", "Strings", 12.99, 29);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Liquid Metal Bridgepins", "Parts", 34.99, 14);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Cleartone Assorted Picks", "Parts", 499);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("The Pick of Destiny", "Parts", 14000000, 1);
+
+
+
