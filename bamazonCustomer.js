@@ -4,14 +4,8 @@ var inquirer = require("inquirer");
 // create the connection information for the sql database
 var connection = mysql.createConnection({
     host: "localhost",
-
-    // Your port; if not 3306
     port: 3306,
-
-    // Your username
     user: "root",
-
-    // Your password
     password: "rootroot",
     database: "bamazon_db"
 });
@@ -23,7 +17,6 @@ connection.connect(function (err) {
     selectDepartment();
 });
 
-//first display all items in the database. id, name, prices, stock. W6D4, line 95-119
 function selectDepartment() {
     inquirer
         .prompt({
@@ -33,12 +26,36 @@ function selectDepartment() {
             choices: ["Acoustics", "Strings", "Parts"]
         })
         .then(function (answer) {
+            //use the answer as an argument to fill the SQL query parameters below
             shop(answer.department)
         });
 }
-//inquirer prompt "what would you like to buy"
-//inquirer prompt "how many, etc"
+
+function continueShopping() {
+    inquirer
+        .prompt({
+            name: "continue",
+            type: "list",
+            message: "Would you like to continue shopping?",
+            choices: ["Yes", "No"]
+        })
+        .then(function (answer) {
+            switch (answer.continue) {
+                case "Yes":
+                    console.log("Please shop all you would like.")
+                    selectDepartment();
+                    break;
+                case "No":
+                    console.log("Please come look again soon. Our inventory and sales change often!")
+                    connection.end();
+                default:
+                    break;
+            }
+        });
+}
+
 function shop(inquirerDept) {
+    //select all only from the department the user chooses
     var query = "SELECT * FROM products WHERE ?";
     connection.query(query, { department_name: inquirerDept }, function (err, results) {
         if (err) throw err;
@@ -57,6 +74,7 @@ function shop(inquirerDept) {
                 }
             ]).then(function (answer) {
                 var chosenItem;
+                //go through the entire query results to see if any item_id's match the answer and set it to its own variable
                 for (var i = 0; i < results.length; i++) {
                     if (results[i].item_id === parseInt(answer.id)) {
                         chosenItem = results[i];
@@ -84,11 +102,10 @@ function shop(inquirerDept) {
                         function (err) {
                             if (err) throw err;
                             console.log("Products bought successfully! You spent: $" + spent)
-                            selectDepartment();
+                            continueShopping();
                         }
                     )
                 }
             })
     });
 }
-
