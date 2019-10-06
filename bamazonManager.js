@@ -21,8 +21,8 @@ function start() {
         .prompt({
             name: "managerPortal",
             type: "list",
-            message: "What department would you like?",
-            choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product"]
+            message: "What would you like to do?",
+            choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"]
         })
         .then(function (answer) {
             switch (answer.managerPortal) {
@@ -37,6 +37,9 @@ function start() {
                     break;
                 case "Add New Product":
                     addNew();
+                    break;
+                case "Exit":
+                    connection.end();
                     break;
                 default:
                     break;
@@ -66,7 +69,7 @@ function addInv() {
     //   * If a manager selects `Add to Inventory`, your app should display a prompt that will let the manager "add more" of any item currently in the store.
     connection.query("SELECT * FROM products", function(err, results) {
         if (err) throw err;
-        // once you have the items, prompt the user for which they'd like to bid on
+        // once we have queried the items, prompt what we want to add stock to.
         inquirer
           .prompt([
             {
@@ -111,6 +114,58 @@ function addInv() {
 
 function addNew() {
     //   * If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
+    inquirer
+    .prompt([
+      {
+        name: "name",
+        type: "input",
+        message: "What is the name of the item?"
+      },
+      {
+        name: "department",
+        type: "input",
+        message: "What department name you would like to place the item in?"
+      },
+      {
+        name: "price",
+        type: "input",
+        message: "What is the price of the item?",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      },
+      {
+        name: "quantity",
+        type: "input",
+        message: "How many of these would you like to add?",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      }
+    ])
+    .then(function(answer) {
+        //inserts into products table with answers
+      connection.query(
+        "INSERT INTO products SET ?",
+        {
+          product_name: answer.name,
+          department_name: answer.department,
+          price: answer.price,
+          stock_quantity: answer.quantity
+        },
+        function(err, results) {
+          if (err) throw err;
+          console.log("Item was successfully added.");
+          start();
+        }
+      );
+    });
 }
 
 
