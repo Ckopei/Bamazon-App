@@ -64,6 +64,49 @@ function viewLow() {
 
 function addInv() {
     //   * If a manager selects `Add to Inventory`, your app should display a prompt that will let the manager "add more" of any item currently in the store.
+    connection.query("SELECT * FROM products", function(err, results) {
+        if (err) throw err;
+        // once you have the items, prompt the user for which they'd like to bid on
+        inquirer
+          .prompt([
+            {
+              name: "id",
+              type: "input",
+              message: "What is the item_id of the product you would like to order more of?"
+            },
+            {
+              name: "number",
+              type: "input",
+              message: "How many would you like to add??"
+            }
+          ]).then(function(answer) {
+            var chosenItem;
+                //go through the entire query results to see if any item_id's match the answer and set it to its own variable
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].item_id === parseInt(answer.id)) {
+                        chosenItem = results[i];
+                    }
+                }
+                var newStock = chosenItem.stock_quantity+parseInt(answer.number);
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: newStock
+                            },
+                            {
+                                item_id: chosenItem.item_id
+                            }
+                        ],
+                        function (err) {
+                            if (err) throw err;
+                            console.log("Successfuly added stock. Below is the updated product table.")
+                            console.table(chosenItem)
+                            start();
+                        }
+                    )
+          });
+});
 }
 
 function addNew() {
