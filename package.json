@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Ckopei/Bamazon-App#readme",
   "dependencies": {
+    "figlet": "^1.2.4",
     "inquirer": "^7.0.0",
     "mysql": "^2.17.1"
   }

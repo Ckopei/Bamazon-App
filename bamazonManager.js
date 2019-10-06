@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var figlet = require('figlet');
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -17,6 +18,11 @@ connection.connect(function (err) {
 });
 
 function start() {
+    console.log(figlet.textSync('Bamazon!', {
+        font: 'Ghost',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+    }));
     inquirer
         .prompt({
             name: "managerPortal",
