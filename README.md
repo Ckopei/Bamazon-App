@@ -57,10 +57,5 @@ This file has four functions that are selected to run through an inquirer prompt
 ![add new](./gifs/addNew.gif)
 
 
-The syntax to use the movie search is: 
-```javascript
-node bamazonManager.js
-```
-
 
 
