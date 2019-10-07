@@ -1,14 +1,14 @@
 # Bamazon-App
 
-This is a web-app that tracks inventory and simulates shopping through the CLI. It is built in Node.Js and uses a SQL database.
+This is a web-app that tracks inventory and simulates shopping through the CLI. It is built in Node.Js and uses a MySQL database.
 
 ## Technologies Used
 
   ### Node Modules
 
   - MySQL for easy querying in Node.
-  - Inquirer for taking arguments from the command line.
-  - Figlet for holiday themed ASCII art in the command line.
+  - Inquirer for prompting information from the command line.
+  - Figlet for holiday themed (Halloween at the time this was written) ASCII art in the command line.
 
   ###  Database
 
