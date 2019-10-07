@@ -89,7 +89,7 @@ function shop(inquirerDept) {
                 //Check if the number they input is greater than the stock available.
                 if (chosenItem.stock_quantity < parseInt(answer.number)) {
                     console.log("Insufficient quantity to fulfil order. Please try again!");
-                    acoustics();
+                    selectDepartment();
                 }
                 //If stock is available, do math and set new quantity in the DB. Show customer how much they spent.
                 else {
